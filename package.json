@@ -1,0 +1,15 @@
+{
+    "name"            : "analytics",
+    "description"     : "analytics server",
+    "version"         : "1.0.0",
+    "homepage"        : "http://github.com/hechangmin/",
+    "dependencies"    : {},
+    "devDependencies" : {
+        "mysql"                 : "~2.1.0",
+        "redis"                 : "*",
+        "moment"                : "~2.8.3",
+        "log4js"                : "~0.6.9",
+        "nodemailer"            : "~0.6.0"
+    },
+    "author" : "hechangmin<hechangmin@gmail.com>"
+}

@@ -69,36 +69,22 @@
     }
 
     function save(sql) {
-
         var sqls = 'INSERT INTO `' + getTabName() + '` (`ip`,`time`,`node`,`snode`,`uuid`,`name`,`cid`,`from`,`client_v`,`browser_v`,`path`,`action`,`ab_name`) VALUES ', arrSqls = [];
-        
-        //debug
         //console.log('sql:', sql);
-
         redisConn.RPUSH(configs.sql_list, sql, function(err, length){
             if(err){
                console.log('Error : redis RPUSH ', configs.sql_list, sql, err); 
             }else if(length > configs.max_count){
-
-                console.log('run here', configs.max_count);
-
                 for(var i = 0, j = 0 ; i <= configs.max_count; i++){
                     redisConn.LPOP(configs.sql_list, function(err, item){
-                        
                         j++;
-
                         if(err){
                             console.log('Error : redis LPOP ', configs.sql_list, err);    
                         }else{                            
-                            
                             arrSqls.push(item);
-                            
                             if(j === configs.max_count) {
-
                                 sqls += arrSqls.join(',') + ';';
-
                                 //console.log(sqls);
-
                                 db.query(sqls, function(err){
                                     if(err){
                                         console.log(err);

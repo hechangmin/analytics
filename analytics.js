@@ -64,7 +64,9 @@
             sql += get(req, 'path') + '","';
             sql += get(req, 'action') + '","';
             sql += get(req, 'ab_name') + '")'; 
-            save(sql);
+            
+            //save(sql); //优化性能
+            setImmediate(save, sql);
         }
     }
 
@@ -211,7 +213,7 @@
 }({
     table_name : 'analytics:table_name',
     sql_list : 'analytics:sql_list',
-    max_count : 2,
+    max_count : 10,
     port : 80,
     mysql :  {
         host     : '127.0.0.1',

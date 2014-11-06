@@ -104,19 +104,17 @@
         var curTableName = 'tab_' + moment().format('YYYYMMDD');
         
         //判断该表是否存在(利用redis，避免反复查询数据库)
-        redisConn.SELECT(0, function(){
-            redisConn.GET(configs.table_name, function(err, tabName){
-                if(err){
-                    console.log('Error : redis GET ', configs.table_name);    
-                }else if(curTableName !== tabName){
-                    redisConn.SET(configs.table_name, curTableName, function(err){
-                        if(err){
-                            console.log('Error : redis SET ', configs.table_name, ' ', curTableName);
-                        }
-                        createTable(curTableName);
-                    });
-                }
-            });
+        redisConn.GET(configs.table_name, function(err, tabName){
+            if(err){
+                console.log('Error : redis GET ', configs.table_name);    
+            }else if(curTableName !== tabName){
+                redisConn.SET(configs.table_name, curTableName, function(err){
+                    if(err){
+                        console.log('Error : redis SET ', configs.table_name, ' ', curTableName);
+                    }
+                    createTable(curTableName);
+                });
+            }
         });
         
         return curTableName;

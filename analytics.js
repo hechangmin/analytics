@@ -169,6 +169,7 @@
         sql += '`action` varchar(128) NOT NULL DEFAULT "",';
         sql += '`ab_name` varchar(128) NOT NULL DEFAULT "",';
         sql += 'PRIMARY KEY (`id`)';
+        //MyISAM引擎 注重写入性能
         sql += ') ENGINE=`MyISAM` AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ROW_FORMAT=DYNAMIC CHECKSUM=0 DELAY_KEY_WRITE=0;';
         
         db.query(sql, function(err, list){

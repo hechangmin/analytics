@@ -46,7 +46,7 @@
         var node = get(req, 'node');
         var snode = get(req, 'snode');
         var name = get(req, 'name');
-
+        
         //关键字段不能为空
         if( '' === node || '' === snode || '' === name){
             error('param error:', req.url);
@@ -55,15 +55,15 @@
             sql += localTime + '","';
             sql += node + '","';
             sql += snode + '","';
-            sql += get(req, 'uuid') + '","';
-            sql += name + '","';
-            sql += get(req, 'cid') + '","';
-            sql += get(req, 'from') + '","';
-            sql += get(req, 'client_v') + '","';
-            sql += get(req, 'browser_v') + '","';
-            sql += get(req, 'path') + '","';
-            sql += get(req, 'action') + '","';
-            sql += get(req, 'ab_name') + '")'; 
+            sql += get(req, 'uuid') + '",';
+            sql += db.escape(name) + ',"';
+            sql += get(req, 'cid') + '",';
+            sql += db.escape(get(req, 'from')) + ',';
+            sql += db.escape(get(req, 'client_v')) + ',';
+            sql += db.escape(get(req, 'browser_v')) + ',';
+            sql += db.escape(get(req, 'path')) + ',';
+            sql += db.escape(get(req, 'action')) + ',';
+            sql += db.escape(get(req, 'ab_name')) + ')'; 
             
             //save(sql); //优化性能
             setImmediate(save, sql);
@@ -209,32 +209,4 @@
         db = mysql.createConnection(configs.mysql);
         init();
     }
-}({
-    table_name : 'analytics:table_name',
-    sql_list : 'analytics:sql_list',
-    max_count : 10,
-    port : 80,
-    mysql :  {
-        host     : '127.0.0.1',
-        port     : 3306,
-        database : 'pinfo',
-        user     : 'root',
-        password : 'admin'
-    },
-    redis : {
-        host : '127.0.0.1',
-        port : 6379
-    },
-    log : {
-        appenders: [{
-            type: 'file',
-            filename: './log/error.log',
-            maxLogSize: 204800,
-            backups: 10,
-            category: 'error'
-        }
-        //,{type: 'console'}
-        ]
-        /*,replaceConsole : true*/
-    }
-}));
+}(require('./configs.js')));

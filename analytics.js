@@ -52,12 +52,12 @@
             error('param error:', req.url);
         }else{
             sql += getIp(req) + '","';
-            sql += localTime + '","';
-            sql += node + '","';
-            sql += snode + '","';
-            sql += get(req, 'uuid') + '",';
-            sql += db.escape(name) + ',"';
-            sql += get(req, 'cid') + '",';
+            sql += localTime + '",';
+            sql += db.escape(node) + ',';
+            sql += db.escape(snode) + ',';
+            sql += db.escape(get(req, 'uuid')) + ',';
+            sql += db.escape(name) + ',';
+            sql += db.escape(get(req, 'cid')) + ',';
             sql += db.escape(get(req, 'from')) + ',';
             sql += db.escape(get(req, 'client_v')) + ',';
             sql += db.escape(get(req, 'browser_v')) + ',';
